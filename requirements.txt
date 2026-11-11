@@ -1,0 +1,4 @@
+numpy>=2.0,<3
+pydicom>=3.0,<4
+pynetdicom>=3.0,<4
+pytest>=8,<10
