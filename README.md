@@ -85,7 +85,7 @@ It includes:
 | **Synthetic generator** | Writes a valid MR Image Storage Part 10 file with a deterministic phantom and zero patient data. | A safe test asset you can commit, share, and regenerate anywhere. |
 | **C-STORE sender** | Opens a real DICOM association, optionally runs C-ECHO, and stores the instance on a PACS. | Exercises the same network path a modality uses — not a mock. |
 | **Interactive lab** | Real CT window/level, HU readout, 3D slice stack, tag decoder, quiz, and ROI model. | Teaches the standard and gives demos a live, memorable artifact. |
-| **Test suite** | Pytest coverage for generation, metadata, pixel data, UID uniqueness, and file format. | Makes changes safe and gives CI something real to run. |
+| **Test suite** | Pytest coverage for generation, metadata, pixel data, UID uniqueness, and file format. | Makes changes safe and gives you a real regression check. |
 | **Docker test PACS** | One command to run Orthanc locally and receive studies. | A complete integration loop on a laptop, with no clinical system. |
 | **MIT license** | Code is free to use, modify, and ship. | Removes legal friction for internal tools, demos, and teaching. |
 
@@ -385,7 +385,7 @@ If you can explain the hierarchy, the three UID levels, the difference between a
 | Persona | User story | Outcome |
 |---|---|---|
 | **Integration engineer** | “As an integration engineer, I want a realistic test study so I can validate PACS ingestion without waiting for clinical data.” | A repeatable study in seconds, not weeks. |
-| **QA engineer** | “As a QA engineer, I want deterministic DICOM files in CI so my tests do not depend on a hospital or a vendor demo.” | Tests that run on every commit and fail for real reasons. |
+| **QA engineer** | “As a QA engineer, I want deterministic DICOM files for automated tests so my tests do not depend on a hospital or a vendor demo.” | Tests that run locally and fail for real reasons. |
 | **Sales engineer** | “As a sales engineer, I want a live demo that shows an image landing in a PACS.” | A credible demo without exposing customer data. |
 | **Educator** | “As an educator, I want students to see windowing, tags, and networking in one place.” | A lab that makes abstract standards concrete. |
 | **Engineering manager** | “As an engineering manager, I want to remove privacy review from the critical path.” | Faster onboarding and lower cost per integration. |
@@ -445,7 +445,6 @@ If you reuse the CT assets, keep the attribution and comply with the CC0 terms. 
 ├── docker-compose.yml
 ├── docker/
 │   └── orthanc.json
-├── .github/workflows/ci.yml
 ├── .nojekyll
 ├── LICENSE
 └── README.md
@@ -546,7 +545,7 @@ The suite checks:
 - the file is valid DICOM Part 10 with file meta information;
 - the phantom is deterministic for a fixed seed.
 
-CI runs the suite on every push and pull request, then generates a fresh study and inspects it with `pydicom`.
+The suite generates a fresh study on every run and inspects it with `pydicom`. Run it before every commit.
 
 ---
 
