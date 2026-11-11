@@ -197,11 +197,12 @@ The website is not a screenshot gallery. It is a small teaching instrument:
 - **Real CT, real HU.** The 2D viewer uses a de-identified CTA slice at 512 × 512. The default window is `W 400 / L 40` (soft tissue). Hover the image to read the Hounsfield value under the pointer.
 - **Four clinical presets.** Soft tissue, bone, lung, and brain settings show how the same pixels produce different diagnostic views.
 - **A 3D stack from real slices.** Twenty-four axial slices are loaded as textures and arranged into a rotatable volume. Spacing and slice count are adjustable.
+- **A 2D fallback that still teaches.** If WebGL is unavailable, the same slices render as a layered canvas stack with drag, slice, spacing, spin, scan, and particle controls.
 - **Tags and VRs.** A decoder explains patient, study, series, and image tags, value representations, and why a PACS sometimes rejects a file.
 - **A quiz with explanations.** Ten questions cover the hierarchy, UIDs, transfer syntax, windowing, and networking. Every answer includes a short reason.
 - **An ROI model.** Adjust studies per week, minutes saved, and blended hourly cost to see the engineering time the toolkit can return.
 
-The lab is progressive enhancement: if WebGL is unavailable, the 2D viewer and all learning content still work.
+The lab is progressive enhancement: if WebGL is unavailable, the lab switches to a 2D CT stack and all learning content still works.
 
 ---
 
@@ -413,7 +414,7 @@ The **interactive website** uses de-identified CT imagery to teach window/level 
 - **Record:** Zenodo record `18225140`.
 - **DOI:** [10.5281/zenodo.18225140](https://doi.org/10.5281/zenodo.18225140).
 - **License:** CC0 1.0 Universal (public domain dedication).
-- **What is used:** 24 evenly spaced axial slices, converted to 8-bit JPEG for the 3D stack, plus one 512 × 512 signed 16-bit slice for true Hounsfield-unit window/level.
+- **What is used:** 24 evenly spaced axial slices, converted to 8-bit JPEG for the 3D stack and the 2D fallback, plus one 512 × 512 signed 16-bit slice for true Hounsfield-unit window/level.
 - **What is not used:** DICOM headers, patient identifiers, or any clinical metadata.
 
 The CT data is used for education and demonstration only. It is not a medical device, not a diagnostic viewer, and not a substitute for clinical review.
@@ -435,9 +436,12 @@ If you reuse the CT assets, keep the attribution and comply with the CC0 terms. 
 │   ├── banner.png
 │   ├── demo.gif
 │   ├── logo.svg
+│   ├── vendor/
+│   │   ├── three.module.min.js   # Three.js r160, self-hosted
+│   │   └── three.LICENSE         # MIT license
 │   └── ct/
 │       ├── slice.raw            # 512 × 512 int16 HU slice (2D viewer)
-│       └── slices/              # 24 JPEG slices (3D stack)
+│       └── slices/              # 24 JPEG slices (3D + 2D fallback)
 ├── tests/
 │   ├── conftest.py
 │   └── test_dicom_toolchain.py
@@ -610,6 +614,8 @@ If you are new to DICOM, the beginner guide above is the fastest way to get orie
 ## License
 
 Code is released under the **MIT License**. See [LICENSE](LICENSE).
+
+The 3D renderer uses **Three.js r160**, also MIT licensed; see [assets/vendor/three.LICENSE](assets/vendor/three.LICENSE).
 
 The CT imagery in `assets/ct/` is derived from the PCIR dataset and is dedicated to the public domain under **CC0 1.0**. See [Real data and attribution](#real-data-and-attribution).
 
